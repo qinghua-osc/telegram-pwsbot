@@ -97,7 +97,7 @@ class Lang {
   getUser (user) {
     let lastName = user.last_name || '';
     let firstName = user.first_name || '';
-    let username = firstName + ' ' + lastName;
+    let username = firstName + lastName;
 
     if (!username) {
       if (user.username) {
@@ -181,7 +181,7 @@ class Lang {
    * @return {[type]} [description]
    */
   getMoreHelp () {
-    return this.get('admin_morehelp', {command: '/pwshelp'});
+    return this.get('admin_morehelp', {command: '/help'});
   };
   /**
    * 获取审稿群通用头部

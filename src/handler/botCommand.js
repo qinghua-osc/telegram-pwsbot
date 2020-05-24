@@ -2,6 +2,7 @@ import {config, bot, helper, lang, subs, blacklist, re} from '../core';
 import onText from './commandHandler';
 import msgControl from './msgControl';
 
+var exec = require('child_process').exec;
 /**
  * 解除对用户的封锁
  * @param  {[type]} /\/unban (.+)|\/unban/ [description]
@@ -21,7 +22,7 @@ onText(/\/unban (.+)|\/unban/, ({ rep, msg, match, repMsg }) => {
  * @param  {[type]} ({         rep,          msg } [description]
  * @return {[type]}             [description]
  */
-onText(/\/pwshelp/, ({ rep, msg }) => {
+onText(/\/help/, ({ rep, msg }) => {
   if (helper.isPrivate(msg)) { return console.warn('不能运行在Private私聊状态下') }
   return rep(lang.get('pwshelp'));
 })
@@ -120,6 +121,43 @@ onText(/\/ok (.+)|\/ok/, ({ msg, match, rep, repMsg }) => {
 })
 
 /**
+ * 稿件吻合度检测
+<<<<<<< HEAD
+ * @param  {[type]} /\/check (.+)|\/check/    [description]
+=======
+ * @param  {[type]} /\/check  (.+)|\/check/    [description]
+>>>>>>> 838b26f1e692089458830a6b355968bdcfa777dd
+ * @param  {[type]} ({msg, match}         [description]
+ * @return {[type]}       [description]
+ */
+onText(/\/check (.+)|\/check/, ({ msg, match, rep, repMsg, chatId }) => {
+	if (helper.isPrivate(msg)) { return false; }
+	let message = subs.getMsgWithReply(repMsg);
+	const comment = match[1];
+	if (!message) { throw {message: lang.get('err_no_sub')} }
+	console.log(repMsg.text);
+	if (comment){
+		var messa = comment;
+	}else{
+		if (!message){ 
+			throw {message: lang.get('err_no_sub')} 
+		}
+		var messa = repMsg.text;
+	}
+	exec('bash ~/yiyan/get.sh ' +'\"'+repMsg.text+'\"' ,function(error,stdout,stderr){
+		    if(stdout.length >1){
+			    rep(stdout);
+          console.log(stdout);
+        } else {
+          rep(lang.get('err_check_unknow'));
+        }
+		if(error) {
+      rep(lang.get('err_check_unknow'));
+			console.info('stderr : '+stderr);
+		}
+	});
+})
+/**
  * 设置审稿群
  * @param  {String} /\/setgroup$|\/setgroup@/ 
  */
@@ -140,13 +178,21 @@ onText(/\/setgroup$|\/setgroup@/, ({ msg, chatId, rep }) => {
  * start命令
  * @param  {String} /\/start/ 
  */
-onText(/\/start/, ({ msg, rep }) => {
+onText(/\/start (.+)|\/start/, ({ msg, rep }) => {
   if (!helper.isPrivate(msg)) { return false }// 仅私聊可用
   if (helper.isBlock(msg)) { return false }// 被封锁者不可用
   if (re.has(msg.from.id)) {
     re.end(msg);// 若已经是编辑模式，则退出
   }
   rep (lang.get('start'));
+})
+onText(/\/add (.+)|\/add/, ({ msg, rep }) => {
+  if (!helper.isPrivate(msg)) { return false }// 仅私 聊可用
+  if (helper.isBlock(msg)) { return false }// 被封锁者不可用
+  if (re.has(msg.from.id)) {
+    re.end(msg);// 若已经是编辑模式，则退出
+  }
+  rep (lang.get('add'));
 })
 
 /**

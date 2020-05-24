@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
-    name: 'pwsbot',
-    script: 'npm run start',
+    name: 'qinghua-bot',
+    script: 'sudo npm run start',
 
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     instances: 1,

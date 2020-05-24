@@ -43,7 +43,7 @@ class Message extends Db
     // 若是实名投稿，则附加版权信息
     if (message.sub_type == vars.SUB_REAL) { caption += "\n" + lang.getViaInfo(message) }
     if (message.text) {
-      caption = message.text + `\n\n${caption}`;
+      caption = message.text + `\n${caption}`;
     }
     return caption;
   };
