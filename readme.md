@@ -9,8 +9,8 @@
 
 先克隆项目
 ```bash
-git clone https://github.com/axiref/telegram-pwsbot
-cd telegram-pwsbot
+git clone https://github.com/qinghua-osc/qinghua-bot.git
+cd qinghua-bot
 npm install
 ```
 然后创建配置文件，直接复制一份 `env.example`
@@ -60,7 +60,7 @@ npm install pm2 -g
 pm2 start
 ```
 
-就可以看到名为 `pwsbot`的任务已经被运行，重启项目可使用 `pm2 restart pwsbot` 命令来完成。
+就可以看到名为 `qinghua-bot`的任务已经被运行，重启项目可使用 `pm2 restart qinghua-bot` 命令来完成。
 
 项目启动后，必须将你的机器人添加到审稿群，机器人会将收到的稿件转发至审稿群，群内所有人皆可审核稿件，如果你没有审稿群，你应该建立一个。
 
@@ -87,6 +87,7 @@ pm2 start
 | /unre <用户ID>   | 结束用户的对话状态                                    | 群       |
 | /pwshelp         | 显示更多可对稿件采取的命令                            | 群       |
 | /echo <回复内容> | 回复给用户一次，但不进入对话模式                      | 群       |
+| /check            | 回复稿件，检测该稿件与频道历史记录吻合度，依赖yiyan项目 | 群      |
 
 
 
